@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- Подключение библиотек -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/preloader.css"/>
+    <link rel="shortcut icon" href="path/to/your/favicon.ico" type="image/x-icon"> <!-- Ensure the favicon is correctly linked -->
+</head>
+
+<body style="margin: 0; overflow: hidden; padding: 0;">
+    <!-- Прелоадер -->
+    <div class="preloader">
+        <div class="preloader__row">
+            <div class="preloader__item"></div>
+            <div class="preloader__item"></div>
+        </div>
+    </div>
+
+    <!-- Блок уведомления -->
+    <div id="message" style="display: none;">
+        <h1>Все таргеты найдены!</h1>
+    </div>
+
+    <!-- Настройка сцены -->
+    <a-scene
+        embedded
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+        renderer="logarithmicDepthBuffer: true;"
+        loading-screen="enabled: false"
+        vr-mode-ui="enabled: false"
+        gesture-detector>
+        <a-assets>
+            <a-asset-item id="animated-asset1" src="assets2/asset.gltf"></a-asset-item>
+            <a-asset-item id="animated-asset" src="assets1/asset.gltf"></a-asset-item>
+        </a-assets>
+
+    <!-- Подключение первого маркера с моделью и анимацией -->
+    <a-marker id="animated-marker1" type="pattern" preset="custom" url="assets2/marker.patt" cursor="fuse: false; rayOrigin: mouse;" emitevents="true">
+        <a-entity
+            id="bowser-model1"
+            class="raycastable" 
+            scale="0.8 0.8 0.8"
+            rotation="-90 0 0"
+            position="0 0 0"
+            gltf-model="#animated-asset1"
+            class="clickable"
+            gesture-handler
+            animation-mixer="loop: repeat">
+        </a-entity>
+    </a-marker>
+
+    <!-- Подключение второго маркера с моделью и анимацией -->
+    <a-marker id="animated-marker" type="pattern" preset="custom" url="assets1/marker.patt" cursor="fuse: false; rayOrigin: mouse;" emitevents="true">
+        <a-entity
+            id="bowser-model"
+            scale="0.5 0.5 0.5"
+            rotation="0 90 -90"
+            position="0 2 0"
+            gltf-model="#animated-asset"
+            class="clickable"
+            gesture-handler
+            animation="property: position; from: -16 0 2; to: 25 0 2; dur: 4000; easing: linear; loop: true">
+        </a-entity>
+    </a-marker>
+        
+        <!-- Подключение камеры -->
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <!-- Настройка музыки -->
+    <audio id="background-music" src="sound/music.mp3" autoplay loop></audio>
+    <audio id="notify-sound" src="sound/notify.mp3"></audio>
+
+    <!-- Скрипт -->
+    <script src="script/main.js"></script>
+    <script>
+        window.onload = function () {
+            setTimeout(() => {
+                document.body.classList.add('loaded_hiding');
+                setTimeout(() => {
+                    document.body.classList.add('loaded');
+                    document.body.classList.remove('loaded_hiding');
+                }, 500);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

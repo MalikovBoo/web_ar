@@ -1,0 +1,35 @@
+
+#message {
+    position: absolute;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 6%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 100, 0, 0.8);
+    animation-name: slip;
+    animation-duration: 0.5s;
+    color: white;
+    padding: 20px 45px;
+    border-radius: 15px 15px 15px 15px;
+    display: none;
+    animation-timing-function: cubic-bezier(0.000, 1.650, 1.000, 1.650);
+}
+
+h1 {
+    font-size: 1.5em
+}
+
+@keyframes slip {
+    from {
+        top: 0%;
+        background: rgba(0, 155, 0, 0);
+        border-radius: 5px 5px 5px 5px;
+    }
+    to {
+        top: 6%;
+        background: rgba(0, 100, 0, 0.8);
+        border-radius: 15px 15px 15px 15px;
+    }
+}
+
+
